@@ -1,0 +1,65 @@
+import { Location } from "@/lib/types";
+
+export const locations: Location[] = [
+  {
+    id: "loc-mad-airport",
+    name: "Aeropuerto Madrid-Barajas",
+    city: "Madrid",
+    country: "España",
+    type: "airport",
+    code: "MAD",
+  },
+  {
+    id: "loc-mad-city",
+    name: "Madrid Centro",
+    city: "Madrid",
+    country: "España",
+    type: "city",
+  },
+  {
+    id: "loc-bcn-airport",
+    name: "Aeropuerto Barcelona-El Prat",
+    city: "Barcelona",
+    country: "España",
+    type: "airport",
+    code: "BCN",
+  },
+  {
+    id: "loc-bcn-city",
+    name: "Barcelona Centro",
+    city: "Barcelona",
+    country: "España",
+    type: "city",
+  },
+  {
+    id: "loc-agp-airport",
+    name: "Aeropuerto Málaga-Costa del Sol",
+    city: "Málaga",
+    country: "España",
+    type: "airport",
+    code: "AGP",
+  },
+  {
+    id: "loc-vlc-airport",
+    name: "Aeropuerto de Valencia",
+    city: "Valencia",
+    country: "España",
+    type: "airport",
+    code: "VLC",
+  },
+  {
+    id: "loc-sev-city",
+    name: "Sevilla Centro",
+    city: "Sevilla",
+    country: "España",
+    type: "city",
+  },
+  {
+    id: "loc-pmi-airport",
+    name: "Aeropuerto de Palma de Mallorca",
+    city: "Palma de Mallorca",
+    country: "España",
+    type: "airport",
+    code: "PMI",
+  },
+];
