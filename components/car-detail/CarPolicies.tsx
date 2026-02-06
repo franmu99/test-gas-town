@@ -58,18 +58,22 @@ export default function CarPolicies() {
       <h2 className="text-lg font-semibold text-slate-900">
         Políticas de alquiler
       </h2>
-      <div className="mt-4 divide-y divide-slate-100">
+      <div className="mt-4 divide-y divide-slate-100" role="list">
         {policies.map((policy, index) => {
           const isOpen = openIndex === index;
+          const id = `policy-${index}`;
           return (
-            <div key={policy.title}>
+            <div key={policy.title} role="listitem">
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="flex w-full items-center gap-4 py-4 text-left transition-colors hover:bg-slate-50"
+                className="flex w-full items-center gap-4 py-4 text-left transition-colors hover:bg-slate-50 rounded-lg"
+                aria-expanded={isOpen}
+                aria-controls={`${id}-content`}
+                id={`${id}-trigger`}
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
-                  <policy.icon className="h-5 w-5" />
+                  <policy.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <span className="flex-1 text-sm font-medium text-slate-900">
                   {policy.title}
@@ -78,10 +82,14 @@ export default function CarPolicies() {
                   className={`h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 ${
                     isOpen ? "rotate-180" : ""
                   }`}
+                  aria-hidden="true"
                 />
               </button>
               <div
-                className={`overflow-hidden transition-all duration-200 ${
+                id={`${id}-content`}
+                role="region"
+                aria-labelledby={`${id}-trigger`}
+                className={`overflow-hidden transition-all duration-200 ease-in-out ${
                   isOpen ? "max-h-48 pb-4" : "max-h-0"
                 }`}
               >

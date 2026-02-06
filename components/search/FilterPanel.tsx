@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const CAR_TYPES = [
-  { value: "economy", label: "Economico" },
+  { value: "economy", label: "Económico" },
   { value: "compact", label: "Compacto" },
   { value: "suv", label: "SUV" },
   { value: "luxury", label: "Lujo" },
@@ -11,7 +12,7 @@ const CAR_TYPES = [
 ] as const;
 
 const TRANSMISSIONS = [
-  { value: "automatic", label: "Automatico" },
+  { value: "automatic", label: "Automático" },
   { value: "manual", label: "Manual" },
 ] as const;
 
@@ -40,6 +41,8 @@ export default function FilterPanel({
   onClose,
   isMobile,
 }: FilterPanelProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
   const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     onChange({ ...filters, [key]: value });
   };
@@ -63,20 +66,58 @@ export default function FilterPanel({
     });
   };
 
+  // Mobile: Escape key and focus trap
+  useEffect(() => {
+    if (!isMobile || !onClose) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && panelRef.current) {
+        const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+          'button, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMobile, onClose]);
+
   const content = (
-    <div className="space-y-6">
+    <div className="space-y-6" role="search" aria-label="Filtros de búsqueda">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-slate-900">Filtros</h2>
         <div className="flex items-center gap-2">
           <button
             onClick={clearAll}
-            className="text-sm text-primary-600 hover:text-primary-700"
+            className="text-sm text-primary-600 transition-colors hover:text-primary-700"
           >
             Limpiar todo
           </button>
           {isMobile && onClose && (
-            <button onClick={onClose} className="p-1 text-slate-500 hover:text-slate-700">
+            <button
+              onClick={onClose}
+              className="p-1 text-slate-500 transition-colors hover:text-slate-700"
+              aria-label="Cerrar filtros"
+            >
               <XMarkIcon className="h-5 w-5" />
             </button>
           )}
@@ -84,8 +125,8 @@ export default function FilterPanel({
       </div>
 
       {/* Car type */}
-      <div>
-        <h3 className="text-sm font-medium text-slate-700 mb-2">Tipo de coche</h3>
+      <fieldset>
+        <legend className="text-sm font-medium text-slate-700 mb-2">Tipo de coche</legend>
         <div className="space-y-1.5">
           {CAR_TYPES.map((t) => (
             <label key={t.value} className="flex items-center gap-2 cursor-pointer">
@@ -99,15 +140,17 @@ export default function FilterPanel({
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
 
       {/* Price range */}
       <div>
         <h3 className="text-sm font-medium text-slate-700 mb-2">
-          Precio por dia: {filters.priceMin}&euro; - {filters.priceMax}&euro;
+          Precio por día: {filters.priceMin}&euro; - {filters.priceMax}&euro;
         </h3>
         <div className="space-y-2">
+          <label className="sr-only" htmlFor="price-min">Precio mínimo</label>
           <input
+            id="price-min"
             type="range"
             min={0}
             max={200}
@@ -117,8 +160,11 @@ export default function FilterPanel({
               if (val <= filters.priceMax) updateFilter("priceMin", val);
             }}
             className="w-full accent-primary-600"
+            aria-label={`Precio mínimo: ${filters.priceMin}€`}
           />
+          <label className="sr-only" htmlFor="price-max">Precio máximo</label>
           <input
+            id="price-max"
             type="range"
             min={0}
             max={200}
@@ -128,6 +174,7 @@ export default function FilterPanel({
               if (val >= filters.priceMin) updateFilter("priceMax", val);
             }}
             className="w-full accent-primary-600"
+            aria-label={`Precio máximo: ${filters.priceMax}€`}
           />
           <div className="flex justify-between text-xs text-slate-400">
             <span>0&euro;</span>
@@ -137,8 +184,8 @@ export default function FilterPanel({
       </div>
 
       {/* Transmission */}
-      <div>
-        <h3 className="text-sm font-medium text-slate-700 mb-2">Transmision</h3>
+      <fieldset>
+        <legend className="text-sm font-medium text-slate-700 mb-2">Transmisión</legend>
         <div className="space-y-1.5">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -163,12 +210,15 @@ export default function FilterPanel({
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
 
       {/* Passengers */}
       <div>
-        <h3 className="text-sm font-medium text-slate-700 mb-2">Pasajeros minimo</h3>
+        <label htmlFor="passengers-select" className="text-sm font-medium text-slate-700 mb-2 block">
+          Pasajeros mínimo
+        </label>
         <select
+          id="passengers-select"
           value={filters.passengers}
           onChange={(e) => updateFilter("passengers", Number(e.target.value))}
           className="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 text-slate-700 focus:border-primary-500 focus:ring-primary-500"
@@ -183,8 +233,8 @@ export default function FilterPanel({
       </div>
 
       {/* Extras */}
-      <div>
-        <h3 className="text-sm font-medium text-slate-700 mb-2">Extras</h3>
+      <fieldset>
+        <legend className="text-sm font-medium text-slate-700 mb-2">Extras</legend>
         <div className="space-y-1.5">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -205,16 +255,26 @@ export default function FilterPanel({
             <span className="text-sm text-slate-600">GPS</span>
           </label>
         </div>
-      </div>
+      </fieldset>
     </div>
   );
 
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-50 bg-black/50" onClick={onClose}>
+      <div
+        className="fixed inset-0 z-50 animate-fadeIn"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Filtros de búsqueda"
+      >
         <div
-          className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-white p-5 overflow-y-auto shadow-xl"
-          onClick={(e) => e.stopPropagation()}
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+        <div
+          ref={panelRef}
+          className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-white p-5 overflow-y-auto shadow-2xl animate-slideInRight"
         >
           {content}
         </div>
@@ -222,5 +282,5 @@ export default function FilterPanel({
     );
   }
 
-  return <aside className="w-64 shrink-0">{content}</aside>;
+  return <aside className="w-64 shrink-0" aria-label="Filtros">{content}</aside>;
 }

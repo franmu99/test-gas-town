@@ -30,7 +30,7 @@ export default function PopularDestinations() {
           {destinations.map((dest, i) => (
             <div
               key={dest.city}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+              className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className={`aspect-[3/2] bg-gradient-to-br ${destColors[i % destColors.length]}`}>
                 <div className="flex h-full items-center justify-center">

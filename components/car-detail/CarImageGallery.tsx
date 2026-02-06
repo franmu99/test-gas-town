@@ -31,7 +31,9 @@ export default function CarImageGallery({ image, name }: Props) {
             key={angle}
             type="button"
             onClick={() => setActiveIndex(i)}
-            className={`relative flex-1 overflow-hidden rounded-lg bg-slate-50 transition-all ${
+            aria-label={`Ver vista ${angle}`}
+            aria-pressed={i === activeIndex}
+            className={`relative flex-1 overflow-hidden rounded-lg bg-slate-50 transition-all duration-200 ${
               i === activeIndex
                 ? "ring-2 ring-secondary-500 ring-offset-1"
                 : "opacity-60 hover:opacity-100"
@@ -44,6 +46,7 @@ export default function CarImageGallery({ image, name }: Props) {
                 fill
                 className="object-contain p-2"
                 sizes="150px"
+                loading="lazy"
               />
             </div>
             <span className="block pb-1 text-center text-[10px] font-medium text-slate-500">

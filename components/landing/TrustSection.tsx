@@ -39,7 +39,7 @@ export default function TrustSection() {
             return (
               <div
                 key={adv.title}
-                className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition hover:shadow-md"
+                className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-100 text-primary-600">
                   {Icon && <Icon className="h-7 w-7" />}

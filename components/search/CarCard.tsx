@@ -15,7 +15,7 @@ function TransmissionIcon({ className }: { className?: string }) {
 
 export default function CarCard({ car }: { car: Car }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+    <article className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
       <div className="relative aspect-[16/10] bg-slate-100">
         <Image
           src={car.image}
@@ -23,6 +23,7 @@ export default function CarCard({ car }: { car: Car }) {
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          loading="lazy"
         />
       </div>
 
@@ -67,12 +68,12 @@ export default function CarCard({ car }: { car: Car }) {
           </div>
           <a
             href={`/coches/${car.id}`}
-            className="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors"
+            className="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg transition-all hover:bg-primary-700 hover:opacity-90 active:scale-[0.98]"
           >
             Ver oferta
           </a>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

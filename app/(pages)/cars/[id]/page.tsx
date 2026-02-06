@@ -36,7 +36,7 @@ export default async function CarDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-8">
+    <div className="mx-auto max-w-7xl px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-8 xl:max-w-[80rem]">
       <Breadcrumb carName={car.name} />
 
       <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-8">

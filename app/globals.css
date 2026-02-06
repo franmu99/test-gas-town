@@ -43,6 +43,9 @@
   --font-mono: var(--font-geist-mono);
 
   --animate-slideDown: slideDown 0.2s ease-out;
+  --animate-fadeIn: fadeIn 0.3s ease-out;
+  --animate-slideInRight: slideInRight 0.3s ease-out;
+  --animate-priceFlash: priceFlash 0.6s ease-out;
 }
 
 @keyframes slideDown {
@@ -56,7 +59,38 @@
   }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes priceFlash {
+  0% { background-color: transparent; }
+  30% { background-color: rgb(254 249 195); }
+  100% { background-color: transparent; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans), "Inter", Arial, Helvetica, sans-serif;
   color: #1a1a1a;
+}
+
+/* Focus-visible for accessibility */
+*:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Remove default outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
 }

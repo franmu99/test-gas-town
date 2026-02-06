@@ -43,15 +43,19 @@ export default function FAQSection() {
           Preguntas frecuentes
         </h2>
       </div>
-      <div className="mt-4 divide-y divide-slate-100">
+      <div className="mt-4 divide-y divide-slate-100" role="list">
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index;
+          const id = `faq-${index}`;
           return (
-            <div key={faq.question}>
+            <div key={faq.question} role="listitem">
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="flex w-full items-center justify-between gap-4 py-4 text-left transition-colors hover:bg-slate-50"
+                className="flex w-full items-center justify-between gap-4 py-4 text-left transition-colors hover:bg-slate-50 rounded-lg"
+                aria-expanded={isOpen}
+                aria-controls={`${id}-content`}
+                id={`${id}-trigger`}
               >
                 <span className="flex-1 text-sm font-medium text-slate-900">
                   {faq.question}
@@ -60,10 +64,14 @@ export default function FAQSection() {
                   className={`h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 ${
                     isOpen ? "rotate-180" : ""
                   }`}
+                  aria-hidden="true"
                 />
               </button>
               <div
-                className={`overflow-hidden transition-all duration-200 ${
+                id={`${id}-content`}
+                role="region"
+                aria-labelledby={`${id}-trigger`}
+                className={`overflow-hidden transition-all duration-200 ease-in-out ${
                   isOpen ? "max-h-48 pb-4" : "max-h-0"
                 }`}
               >

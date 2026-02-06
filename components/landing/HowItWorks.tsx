@@ -13,7 +13,7 @@ const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>
 
 export default function HowItWorks() {
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section id="como-funciona" className="bg-white py-16 sm:py-24 scroll-mt-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-primary-600">
@@ -33,7 +33,7 @@ export default function HowItWorks() {
             return (
               <div
                 key={step.title}
-                className="relative rounded-2xl bg-slate-50 p-8 text-center transition hover:bg-primary-50"
+                className="relative rounded-2xl bg-slate-50 p-8 text-center transition-all duration-200 hover:bg-primary-50 hover:-translate-y-1 hover:shadow-md"
               >
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-100 text-primary-600">
                   {Icon && <Icon className="h-8 w-8" />}

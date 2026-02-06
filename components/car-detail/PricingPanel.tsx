@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import { ShieldCheckIcon } from "@heroicons/react/24/solid";
 import { Car } from "@/lib/types";
 
@@ -19,11 +19,25 @@ const extras = [
 export default function PricingPanel({ car }: Props) {
   const [days, setDays] = useState(3);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
+  const [priceFlash, setPriceFlash] = useState(false);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const triggerFlash = useCallback(() => {
+    setPriceFlash(true);
+    if (flashTimer.current) clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setPriceFlash(false), 600);
+  }, []);
 
   const toggleExtra = (id: string) => {
     setSelectedExtras((prev) =>
       prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
     );
+    triggerFlash();
+  };
+
+  const handleDaysChange = (newDays: number) => {
+    setDays(newDays);
+    triggerFlash();
   };
 
   const subtotal = car.pricePerDay * days;
@@ -38,7 +52,7 @@ export default function PricingPanel({ car }: Props) {
     <>
       {/* Desktop sticky panel */}
       <div className="hidden lg:block">
-        <div className="sticky top-8 rounded-2xl bg-white shadow-sm">
+        <div className="sticky top-20 rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5">
           <div className="p-6">
             <div className="flex items-baseline gap-1">
               <span className="text-3xl font-extrabold text-slate-900">
@@ -68,8 +82,8 @@ export default function PricingPanel({ car }: Props) {
               <select
                 id="days-desktop"
                 value={days}
-                onChange={(e) => setDays(Number(e.target.value))}
-                className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none"
+                onChange={(e) => handleDaysChange(Number(e.target.value))}
+                className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 transition-colors focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none"
               >
                 {[1, 2, 3, 4, 5, 6, 7, 10, 14, 21, 30].map((d) => (
                   <option key={d} value={d}>
@@ -87,7 +101,7 @@ export default function PricingPanel({ car }: Props) {
                 {extras.map((extra) => (
                   <label
                     key={extra.id}
-                    className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-slate-200 p-3 transition-colors hover:bg-slate-50 has-[:checked]:border-accent-300 has-[:checked]:bg-accent-50"
+                    className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-slate-200 p-3 transition-all duration-200 hover:bg-slate-50 has-[:checked]:border-accent-300 has-[:checked]:bg-accent-50"
                   >
                     <div className="flex items-center gap-2.5">
                       <input
@@ -138,7 +152,11 @@ export default function PricingPanel({ car }: Props) {
                 </span>
                 <span className="text-slate-900">{taxes.toFixed(2)}€</span>
               </div>
-              <div className="flex justify-between border-t border-slate-200 pt-3 text-lg font-bold">
+              <div
+                className={`flex justify-between border-t border-slate-200 pt-3 text-lg font-bold rounded-lg px-1 -mx-1 transition-colors ${
+                  priceFlash ? "animate-priceFlash" : ""
+                }`}
+              >
                 <span className="text-slate-900">Total</span>
                 <span className="text-slate-900">{total.toFixed(2)}€</span>
               </div>
@@ -146,7 +164,7 @@ export default function PricingPanel({ car }: Props) {
 
             <button
               type="button"
-              className="mt-5 w-full rounded-xl bg-accent-500 px-4 py-3.5 text-base font-extrabold text-white shadow-lg shadow-accent-500/25 transition-all hover:bg-accent-600 hover:shadow-xl hover:shadow-accent-500/30 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"
+              className="mt-5 w-full rounded-xl bg-accent-500 px-4 py-3.5 text-base font-extrabold text-white shadow-lg shadow-accent-500/25 transition-all duration-200 hover:bg-accent-600 hover:shadow-xl hover:shadow-accent-500/30 hover:opacity-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"
             >
               Reservar ahora
             </button>
@@ -162,10 +180,14 @@ export default function PricingPanel({ car }: Props) {
       </div>
 
       {/* Mobile fixed bottom bar */}
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 p-4 backdrop-blur-sm lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 p-4 backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-lg items-center justify-between gap-4">
           <div>
-            <div className="flex items-baseline gap-1">
+            <div
+              className={`flex items-baseline gap-1 rounded-md px-1 -mx-1 transition-colors ${
+                priceFlash ? "animate-priceFlash" : ""
+              }`}
+            >
               <span className="text-xl font-extrabold text-slate-900">
                 {total.toFixed(2)}€
               </span>
@@ -178,7 +200,7 @@ export default function PricingPanel({ car }: Props) {
           </div>
           <button
             type="button"
-            className="rounded-xl bg-accent-500 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-accent-500/25 transition-all hover:bg-accent-600"
+            className="rounded-xl bg-accent-500 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-accent-500/25 transition-all duration-200 hover:bg-accent-600 hover:opacity-90 active:scale-[0.98]"
           >
             Reservar ahora
           </button>

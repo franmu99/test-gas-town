@@ -20,13 +20,13 @@ export default function CTASection() {
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <Link
             href="/buscar"
-            className="rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wide text-primary-600 shadow-lg transition hover:bg-primary-50 hover:shadow-xl focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-600 focus:outline-none"
+            className="rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wide text-primary-600 shadow-lg transition-all duration-200 hover:bg-primary-50 hover:shadow-xl active:scale-[0.98] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-600 focus:outline-none"
           >
             Buscar coches ahora
           </Link>
           <Link
             href="/ofertas"
-            className="rounded-lg border-2 border-white/30 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-white/10 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-600 focus:outline-none"
+            className="rounded-lg border-2 border-white/30 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white transition-all duration-200 hover:bg-white/10 active:scale-[0.98] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-600 focus:outline-none"
           >
             Ver ofertas
           </Link>

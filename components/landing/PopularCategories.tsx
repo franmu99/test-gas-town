@@ -38,7 +38,7 @@ export default function PopularCategories() {
           {categories.map((cat, i) => (
             <div
               key={cat.name}
-              className="group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+              className="group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className={`aspect-[16/10] bg-gradient-to-br ${bgColors[i % bgColors.length]}`}>
                 <div className="flex h-full items-center justify-center">

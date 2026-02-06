@@ -16,24 +16,28 @@ export default function SearchBar({
   showFilterButton,
 }: SearchBarProps) {
   return (
-    <div className="flex items-center gap-2 bg-white rounded-xl shadow-sm border border-slate-200 p-2">
+    <div className="flex items-center gap-2 bg-white rounded-xl shadow-sm border border-slate-200 p-2 transition-shadow focus-within:shadow-md focus-within:border-primary-300">
       {showFilterButton && (
         <button
           onClick={onToggleFilters}
-          className="p-2 text-slate-500 hover:text-primary-600 lg:hidden"
+          className="p-2 text-slate-500 transition-colors hover:text-primary-600 lg:hidden"
           aria-label="Abrir filtros"
         >
           <AdjustmentsHorizontalIcon className="h-5 w-5" />
         </button>
       )}
       <div className="flex items-center flex-1 gap-2 px-2">
-        <MagnifyingGlassIcon className="h-5 w-5 text-slate-400 shrink-0" />
+        <MagnifyingGlassIcon className="h-5 w-5 text-slate-400 shrink-0" aria-hidden="true" />
+        <label htmlFor="search-location" className="sr-only">Buscar por ubicación</label>
         <input
+          id="search-location"
           type="text"
           value={location}
           onChange={(e) => onLocationChange(e.target.value)}
-          placeholder="Buscar por ubicacion..."
+          placeholder="Buscar por ubicación..."
           className="w-full text-sm text-slate-700 placeholder:text-slate-400 outline-none"
+          role="searchbox"
+          aria-label="Buscar coches por ubicación"
         />
       </div>
     </div>

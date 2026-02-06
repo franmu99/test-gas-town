@@ -92,7 +92,7 @@ export default function BuscarPage() {
   }, [fetchCars]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 xl:max-w-[80rem]">
       {/* Search bar */}
       <div className="mb-6">
         <SearchBar
@@ -123,7 +123,7 @@ export default function BuscarPage() {
         <div className="flex-1 min-w-0">
           {/* Results header */}
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-600" aria-live="polite" aria-atomic="true">
               {loading ? (
                 "Buscando..."
               ) : (
