@@ -13,32 +13,40 @@ const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>
 
 export default function HowItWorks() {
   return (
-    <section className="bg-white py-16 sm:py-20">
+    <section className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary-600">
+            Sencillo y rápido
+          </p>
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
             Cómo funciona
           </h2>
-          <p className="mt-3 text-lg text-slate-600">
+          <p className="mx-auto mt-3 max-w-xl text-lg text-slate-600">
             Alquilar un coche nunca fue tan fácil
           </p>
         </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-3">
+        <div className="mt-14 grid gap-8 sm:grid-cols-3">
           {steps.map((step, index) => {
             const Icon = iconMap[step.icon];
             return (
-              <div key={step.title} className="text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary-100 text-primary-700">
-                  {Icon && <Icon className="h-7 w-7" />}
+              <div
+                key={step.title}
+                className="relative rounded-2xl bg-slate-50 p-8 text-center transition hover:bg-primary-50"
+              >
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-100 text-primary-600">
+                  {Icon && <Icon className="h-8 w-8" />}
                 </div>
-                <span className="mt-4 inline-block rounded-full bg-primary-50 px-3 py-0.5 text-xs font-semibold text-primary-700">
+                <span className="mt-5 inline-block rounded-full bg-primary-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                   Paso {index + 1}
                 </span>
-                <h3 className="mt-3 text-lg font-semibold text-slate-900">
+                <h3 className="mt-4 text-xl font-bold text-slate-900">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-sm text-slate-600">{step.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {step.description}
+                </p>
               </div>
             );
           })}

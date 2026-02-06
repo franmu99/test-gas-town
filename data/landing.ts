@@ -44,6 +44,18 @@ export const categories = [
     priceFrom: 45,
     image: "/categories/van.jpg",
   },
+  {
+    name: "Convertible",
+    description: "Libertad al aire libre",
+    priceFrom: 55,
+    image: "/categories/convertible.jpg",
+  },
+  {
+    name: "Pickup",
+    description: "Potencia y capacidad",
+    priceFrom: 40,
+    image: "/categories/pickup.jpg",
+  },
 ];
 
 export const destinations = [
@@ -71,4 +83,27 @@ export const advantages = [
     title: "Soporte 24/7",
     description: "Nuestro equipo está disponible en cualquier momento para ayudarte.",
   },
+  {
+    icon: "EyeSlashIcon",
+    title: "Sin costes ocultos",
+    description: "Precios transparentes desde el primer momento. Lo que ves es lo que pagas.",
+  },
+];
+
+export const providers = [
+  "Hertz",
+  "Avis",
+  "Europcar",
+  "Sixt",
+  "Enterprise",
+  "Budget",
+  "Alamo",
+  "National",
+];
+
+export const stats = [
+  { value: "1,000+", label: "Marcas de coches" },
+  { value: "50,000+", label: "Ubicaciones" },
+  { value: "254K+", label: "Opiniones positivas" },
+  { value: "Premiado", label: "Mejor web 2025" },
 ];

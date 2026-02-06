@@ -15,14 +15,16 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm sticky top-0 z-50">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="text-xl font-bold text-primary-700">
-          RentaCar
+        <Link href="/" className="flex items-center gap-2">
+          <span className="text-2xl font-extrabold tracking-tight text-primary-600">
+            Renta<span className="text-slate-900">Car</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex md:gap-x-8">
+        <div className="hidden md:flex md:items-center md:gap-x-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
@@ -32,6 +34,12 @@ export default function Header() {
               {item.name}
             </Link>
           ))}
+          <Link
+            href="/buscar"
+            className="rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700"
+          >
+            Reservar
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -63,6 +71,13 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
+            <Link
+              href="/buscar"
+              className="mt-2 block rounded-lg bg-primary-600 px-3 py-2.5 text-center text-base font-semibold text-white"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Reservar
+            </Link>
           </div>
         </div>
       )}
