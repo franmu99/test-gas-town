@@ -5,6 +5,7 @@ export interface CarSpecs {
   doors: number;
   ac: boolean;
   gps: boolean;
+  fuel: "gasoline" | "diesel" | "hybrid" | "electric";
 }
 
 export interface Car {
@@ -21,6 +22,7 @@ export interface Car {
   reviewCount: number;
   locationId: string;
   available: boolean;
+  provider: string;
 }
 
 export interface Location {

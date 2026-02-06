@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { Car } from "@/lib/types";
 
 interface Props {
@@ -16,6 +17,19 @@ export default function CarDescription({ car }: Props) {
     van: "Máxima capacidad para grupos grandes. Ideal para familias numerosas, eventos o viajes en equipo.",
   };
 
+  const features: string[] = [];
+  if (car.specs.ac) features.push("Aire acondicionado incluido");
+  if (car.specs.gps) features.push("Navegación GPS integrada");
+  if (car.specs.transmission === "automatic")
+    features.push("Transmisión automática");
+  if (car.specs.passengers >= 7)
+    features.push(`Capacidad para ${car.specs.passengers} pasajeros`);
+  if (car.specs.luggage >= 4)
+    features.push(`Amplio maletero (${car.specs.luggage} maletas)`);
+  if (car.specs.fuel === "hybrid") features.push("Motor híbrido eficiente");
+  if (car.specs.fuel === "electric")
+    features.push("100% eléctrico, cero emisiones");
+
   return (
     <div className="rounded-2xl bg-white p-6 shadow-sm">
       <h2 className="text-lg font-semibold text-slate-900">
@@ -33,6 +47,22 @@ export default function CarDescription({ car }: Props) {
         {car.specs.ac ? ", aire acondicionado" : ""}
         {car.specs.gps ? " y GPS integrado" : ""}.
       </p>
+
+      {features.length > 0 && (
+        <div className="mt-4 border-t border-slate-100 pt-4">
+          <h3 className="text-sm font-medium text-slate-900">
+            Características destacadas
+          </h3>
+          <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+            {features.map((feat) => (
+              <li key={feat} className="flex items-center gap-2 text-sm text-slate-600">
+                <CheckCircleIcon className="h-4 w-4 shrink-0 text-emerald-500" />
+                {feat}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
