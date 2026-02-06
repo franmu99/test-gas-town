@@ -1,8 +1,8 @@
 "use client";
 
-import { MapPinIcon, CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { providers, stats } from "@/data/landing";
+import SearchForm from "./SearchForm";
 
 export default function HeroSection() {
   return (
@@ -39,92 +39,9 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Search form */}
-        <div className="mx-auto mt-10 max-w-4xl">
-          <form className="rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-slate-900/5 sm:p-6">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {/* Location */}
-              <div className="sm:col-span-2 lg:col-span-1">
-                <label
-                  htmlFor="location"
-                  className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500"
-                >
-                  Lugar de recogida
-                </label>
-                <div className="relative">
-                  <MapPinIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    id="location"
-                    type="text"
-                    placeholder="Ciudad o aeropuerto"
-                    className="w-full rounded-lg border border-slate-300 py-3 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Pick-up date */}
-              <div>
-                <label
-                  htmlFor="pickup-date"
-                  className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500"
-                >
-                  Fecha recogida
-                </label>
-                <div className="relative">
-                  <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    id="pickup-date"
-                    type="date"
-                    className="w-full rounded-lg border border-slate-300 py-3 pl-10 pr-3 text-sm text-slate-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Return date */}
-              <div>
-                <label
-                  htmlFor="return-date"
-                  className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500"
-                >
-                  Fecha devolución
-                </label>
-                <div className="relative">
-                  <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    id="return-date"
-                    type="date"
-                    className="w-full rounded-lg border border-slate-300 py-3 pl-10 pr-3 text-sm text-slate-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Pick-up time */}
-              <div>
-                <label
-                  htmlFor="pickup-time"
-                  className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500"
-                >
-                  Hora recogida
-                </label>
-                <div className="relative">
-                  <ClockIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    id="pickup-time"
-                    type="time"
-                    defaultValue="10:00"
-                    className="w-full rounded-lg border border-slate-300 py-3 pl-10 pr-3 text-sm text-slate-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="mt-4 w-full cursor-pointer rounded-lg bg-primary-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-primary-600/30 transition hover:bg-primary-700 hover:shadow-primary-700/30 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none sm:mt-5"
-            >
-              Buscar coches
-            </button>
-          </form>
+        {/* Professional search form */}
+        <div className="mx-auto mt-10 max-w-5xl">
+          <SearchForm />
         </div>
 
         {/* Provider logos bar */}
